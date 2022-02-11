@@ -77,7 +77,7 @@ public class IoTSensorSimulatorAnomaly {
                     final ObjectNode node = new ObjectMapper().readValue(valueJson, ObjectNode.class);
                     String key = node.get("sensor_ts") + ":" + node.get("sensor_id");
 
-                    ProducerRecord<String, byte[]> eventrecord = new ProducerRecord<>("iot", key, valueJson);
+                    ProducerRecord<String, byte[]> eventrecord = new ProducerRecord<>("healthyWorkplace", key, valueJson);
                     RecordMetadata msg = producer.send(eventrecord).get();
                     LOG.info(String.format("Published %s/%d/%d : %s", msg.topic(), msg.partition(), msg.offset(), jsonObjectAnomaly()));
                 } else {
@@ -87,7 +87,7 @@ public class IoTSensorSimulatorAnomaly {
                     final ObjectNode node = new ObjectMapper().readValue(valueJson, ObjectNode.class);
                     String key = node.get("sensor_ts") + ":" + node.get("sensor_id");
 
-                    ProducerRecord<String, byte[]> eventrecord = new ProducerRecord<>("iot", key, valueJson);
+                    ProducerRecord<String, byte[]> eventrecord = new ProducerRecord<>("healthyWorkplace", key, valueJson);
                     RecordMetadata msg = producer.send(eventrecord).get();
                     LOG.info(String.format("Published %s/%d/%d : %s", msg.topic(), msg.partition(), msg.offset(), jsonObject()));
                 }
@@ -105,19 +105,10 @@ public class IoTSensorSimulatorAnomaly {
         ObjectNode report = objectMapper.createObjectNode();
         report.put("sensor_ts", Instant.now().toEpochMilli());
         report.put("sensor_id", (random.nextInt(41)));
-        report.put("sensor_0", (random.nextInt(9)));
-        report.put("sensor_1", (random.nextInt(11)));
-        report.put("sensor_2", (random.nextInt(22)));
-        report.put("sensor_3", (random.nextInt(33)));
-        report.put("sensor_4", (random.nextInt(44)));
-        report.put("sensor_5", (random.nextInt(55)));
-        report.put("sensor_6", (random.nextInt(66)));
-        report.put("sensor_7", (random.nextInt(77)));
-        report.put("sensor_8", (random.nextInt(88)));
-        report.put("sensor_9", (random.nextInt(99)));
-        report.put("sensor_10", (random.nextInt(1010)));
-        report.put("sensor_11", (random.nextInt(1111)));
-
+        report.put("celsius", (random.nextInt(9)));
+        report.put("lux", (random.nextInt(11)));
+        report.put("ppm", (random.nextInt(22)));
+        report.put("cm", (random.nextInt(33)));
         return report;
     }
 
@@ -126,19 +117,10 @@ public class IoTSensorSimulatorAnomaly {
         ObjectNode report = objectMapper.createObjectNode();
         report.put("sensor_ts", Instant.now().toEpochMilli());
         report.put("sensor_id", (random.nextInt(3)));
-        report.put("sensor_0", (random.nextInt(9)) + 99);
-        report.put("sensor_1", (random.nextInt(11)) * 11);
-        report.put("sensor_2", (random.nextInt(22)));
-        report.put("sensor_3", (random.nextInt(33)));
-        report.put("sensor_4", (random.nextInt(44)));
-        report.put("sensor_5", (random.nextInt(55)));
-        report.put("sensor_6", (random.nextInt(66)));
-        report.put("sensor_7", (random.nextInt(77)));
-        report.put("sensor_8", (random.nextInt(88)));
-        report.put("sensor_9", (random.nextInt(99)));
-        report.put("sensor_10", (random.nextInt(1010)));
-        report.put("sensor_13", (random.nextInt(1)));
-
+        report.put("celsius", (random.nextInt(9)) + 99);
+        report.put("lux", (random.nextInt(11)) * 11);
+        report.put("ppm", (random.nextInt(22)));
+        report.put("cm", (random.nextInt(33)));
         return report;
     }
 
